@@ -17,4 +17,4 @@ WORKDIR /app
 COPY ./app /app
 RUN mkdir /app/statefiles
 
-CMD ["python -u", "main.py"]
+CMD ["python", "-u", "main.py"]
