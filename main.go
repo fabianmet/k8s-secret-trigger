@@ -24,7 +24,7 @@ func main() {
 		for {
 			select {
 			// watch for events
-			case event := <-watcher.Events:
+			case _ = <-watcher.Events:
                                 fmt.Println("FILES CHANGES FOUND!! AAAAHHH!!!")
 				os.Exit(0)
 
