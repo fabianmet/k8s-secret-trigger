@@ -25,7 +25,7 @@ func main() {
 			select {
 			// watch for events
 			case event := <-watcher.Events:
-				fmt.Printf("EVENT! %#v\n", event)
+                                fmt.Println("FILES CHANGES FOUND!! AAAAHHH!!!")
 				os.Exit(0)
 
 				// watch for errors
