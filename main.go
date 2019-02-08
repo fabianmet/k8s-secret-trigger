@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/fsnotify/fsnotify"
-	"os"
 )
 
 func main() {
@@ -16,24 +15,24 @@ func main() {
 	}
 	defer watcher.Close()
 
-	//
+	// Prepare the lifecycle channel
 	done := make(chan bool)
 
 	//
-	go func() {
+	go func(c chan bool) {
 		for {
 			select {
 			// watch for events
-			case _ = <-watcher.Events:
-                                fmt.Println("FILES CHANGES FOUND!! AAAAHHH!!!")
-				os.Exit(0)
+			case event := <-watcher.Events:
+				fmt.Printf("File %v has operation %v AAAAHHH!!!\n", event.Name, event.Op)
+				done <- true
 
 				// watch for errors
 			case err := <-watcher.Errors:
 				fmt.Println("ERROR", err)
 			}
 		}
-	}()
+	}(done)
 
 	if err := watcher.Add("/triggerfiles"); err != nil {
 		fmt.Println("ERROR", err)
